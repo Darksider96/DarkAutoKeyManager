@@ -48,4 +48,8 @@ Compilação: PyInstaller com suporte a recursos embutidos (_MEIPASS).
 👤 Autor
 Desenvolvido por Johnatan (Darksider96).
 
+<<<<<<< HEAD
 Criador de soluções como DarkMonitor, Reino da Lógica e diversos mods para a comunidade DayZ (DBS Mods).
+=======
+Criador de soluções como DarkMonitor, Reino da Lógica e diversos mods para a comunidade DayZ (DBS Mods).
+>>>>>>> ffe953ef9a0efdd104bb5e7d3e0e911e5f1e1ebe
