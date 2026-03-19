@@ -186,17 +186,27 @@ class DarkAutoKeyManager:
             self.write_log(f"{self.T['msg_err_critical']}{str(e)}")
 
     def manage_keys(self, path):
+        self.write_log(self.T['log_keys_sync'] if 'log_keys_sync' in self.T else "Sincronizando chaves...")
         key_folder = os.path.join(path, "keys")
         if not os.path.exists(key_folder): os.makedirs(key_folder)
+        
         mods = [d for d in os.listdir(path) if d.startswith("@") and os.path.isdir(os.path.join(path, d))]
         valid_keys = set()
+        
+        # Lista de nomes possíveis para a pasta de chaves dentro do mod
+        possible_key_dirs = ["keys", "key", "Key", "Keys"]
+
         for mod in mods:
-            mod_key_path = os.path.join(path, mod, "keys")
-            if os.path.exists(mod_key_path):
-                for f in os.listdir(mod_key_path):
-                    if f.endswith(".bikey"):
-                        valid_keys.add(f)
-                        shutil.copy2(os.path.join(mod_key_path, f), os.path.join(key_folder, f))
+            for folder_name in possible_key_dirs:
+                mod_key_path = os.path.join(path, mod, folder_name)
+                
+                if os.path.exists(mod_key_path) and os.path.isdir(mod_key_path):
+                    for f in os.listdir(mod_key_path):
+                        if f.endswith(".bikey"):
+                            valid_keys.add(f)
+                            shutil.copy2(os.path.join(mod_key_path, f), os.path.join(key_folder, f))
+                    # Se achou uma pasta válida e processou, não precisa testar as outras variações para este mod
+                    break 
         
         self.write_log(self.T['log_keys'].format(count=len(valid_keys)))
 
